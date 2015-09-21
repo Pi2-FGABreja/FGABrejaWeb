@@ -1,0 +1,12 @@
+[run]
+omit =
+    */migrations/*
+    test_*.py
+    __init__.py
+    */urls.py
+    */tests/*
+    */tests.py
+
+[report]
+precision = 2
+show_missing = True
