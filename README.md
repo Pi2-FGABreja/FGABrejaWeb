@@ -1,5 +1,7 @@
 # FGABrejaWeb
 
+[ ![Codeship Status for Pi2-FGABreja/FGABrejaWeb](https://codeship.com/projects/c2c3e240-43ce-0133-7734-525e623546c2/status?branch=master)](https://codeship.com/projects/104164)
+
 ### Setting up development environment
 
 ```
