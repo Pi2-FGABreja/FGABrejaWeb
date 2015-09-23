@@ -1,4 +1,5 @@
 [run]
+source = ./
 omit =
     */migrations/*
     test_*.py
@@ -6,6 +7,7 @@ omit =
     */urls.py
     */tests/*
     */tests.py
+    settings/*
 
 [report]
 precision = 2
