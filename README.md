@@ -2,6 +2,8 @@
 
 [ ![Codeship Status for Pi2-FGABreja/FGABrejaWeb](https://codeship.com/projects/c2c3e240-43ce-0133-7734-525e623546c2/status?branch=master)](https://codeship.com/projects/104164)
 
+[![Code Climate](https://codeclimate.com/github/Pi2-FGABreja/FGABrejaWeb/badges/gpa.svg)](https://codeclimate.com/github/Pi2-FGABreja/FGABrejaWeb)
+
 ### Setting up development environment
 
 ```
