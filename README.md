@@ -3,6 +3,7 @@
 [ ![Codeship Status for Pi2-FGABreja/FGABrejaWeb](https://codeship.com/projects/c2c3e240-43ce-0133-7734-525e623546c2/status?branch=master)](https://codeship.com/projects/104164)
 
 [![Code Climate](https://codeclimate.com/github/Pi2-FGABreja/FGABrejaWeb/badges/gpa.svg)](https://codeclimate.com/github/Pi2-FGABreja/FGABrejaWeb)
+[![Coverage Status](https://coveralls.io/repos/Pi2-FGABreja/FGABrejaWeb/badge.svg?branch=master&service=github)](https://coveralls.io/github/Pi2-FGABreja/FGABrejaWeb?branch=master)
 
 ### Setting up development environment
 
