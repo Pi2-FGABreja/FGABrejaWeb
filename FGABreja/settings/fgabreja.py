@@ -1,4 +1,4 @@
-from settings import databases, security, static, apps
+from settings import databases, security, static, apps, api
 
 ROOT_URLCONF = 'settings.urls'
 WSGI_APPLICATION = 'settings.wsgi.application'
@@ -27,3 +27,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+# API
+API_URL = api.API_URL
