@@ -130,10 +130,9 @@ class RegisterUserView(View):
             user = form.save()
 
             response = redirect(reverse('login'))
-            username = form.cleaned_data['username']
             messages.success(
                 request,
-                _("User {} successfully created!".format(username)))
+                _("User {} successfully created!".format(user.username)))
         else:
             self.add_message_errors(form, request)
             response = redirect(reverse('register_user'))
