@@ -59,3 +59,4 @@ target/
 
 databases.py
 security.py
+*.sqlite3

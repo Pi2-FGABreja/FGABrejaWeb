@@ -1,0 +1,9 @@
+.login-card {
+  @extend .card;
+  margin-top: 5rem;
+}
+
+.fgabreja-topbar {
+  @extend .brand-logo;
+  font-family: "PatuaOne";
+}
