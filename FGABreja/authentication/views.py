@@ -125,9 +125,10 @@ class RegisterUserView(View):
                                   context=RequestContext(request))
 
     def post(self, request):
-        form = UserForm(request.POST)
+        form = UserForm(request)
         if form.is_valid():
             user = form.save()
+            user.save()
 
             response = redirect(reverse('login'))
             messages.success(

@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
-from ..models import BusinemeUser
+from django.contrib.auth.models import User
 
 
 class TestLoginView(TestCase):
@@ -9,7 +9,7 @@ class TestLoginView(TestCase):
         self.client = Client()
 
     def create_user(self, is_active=True):
-        user = BusinemeUser()
+        user = User()
         user.id = 1
         user.username = 'username'
         user.email = 'email@test.com'
@@ -96,8 +96,8 @@ class TestRegisterUserView(TestCase):
         self.assertTemplateUsed(response, template_name='register.html')
 
     def test_post_valid_data(self):
-        before = len(BusinemeUser.objects.all())
+        before = len(User.objects.all())
         self.client.post(reverse('register_user'), data=self.data)
-        after = len(BusinemeUser.objects.all())
+        after = len(User.objects.all())
 
         self.assertGreater(after, before)

@@ -39,17 +39,17 @@
       <script>
         {% for message in messages %}
           {% if message.tags == 'info' %}
-            var color = 'dark-grey';
+            var color = 'blue-grey';
           {% elif message.tags == 'error' %}
-            var color = 'red';
+            var color = 'red darken-2';
           {% elif message.tags == 'warning' %}
-            var color = 'orange';
+            var color = 'yellow darken-4';
           {% elif message.tags == 'success' %}
-            var color = 'green';
+            var color = 'light-green darken-3';
           {% else %}
-            var color = 'dark-grey';
+            var color = 'blue-grey';
           {% endif %}
-          Materialize.toast('{{message}}', 4000, 'busineme ' + color);
+          Materialize.toast('{{message}}', 4000, color);
         {% endfor %}
       </script>
     {% endif %}

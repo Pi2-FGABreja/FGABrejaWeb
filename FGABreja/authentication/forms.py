@@ -2,6 +2,7 @@ from defaults.forms import FGABrejaForm
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, ValidationError
 from django.utils.translation import ugettext as _
+import re
 
 
 class UserForm(FGABrejaForm):
@@ -11,20 +12,29 @@ class UserForm(FGABrejaForm):
         try:
             validate_email(self.data['email'])
             self.cleaned_data['email'] = self.data['email']
+            self.validate_username(self.data['username'])
             self.cleaned_data['username'] = self.data['username']
             self.cleaned_data['first_name'] = self.data['first_name']
             self.cleaned_data['password'] = self.data['password']
             is_valid = True
-        except ValidationError:
-            self.errors.append(_("Enter a valid email address."))
+        except ValidationError as error:
+            self.errors.append(_(error.message))
         return is_valid
+
+    def validate_username(self, username):
+        if re.match(r'^[a-zA-Z0-9._]+$', username) is None:
+            raise ValidationError('Invalid username. Only letter, number, '
+                                  '. and _ are permited.')
+        else:
+            if User.objects.filter(username=username):
+                raise ValidationError('Username already in use.')
 
     def save(self):
         user = User()
         user.username = self.cleaned_data['username']
         user.first_name = self.cleaned_data['first_name']
         user.email = self.cleaned_data['email']
-        user.ser_password(self.cleaned_data['password'])
+        user.set_password(self.cleaned_data['password'])
         return user
 
 
