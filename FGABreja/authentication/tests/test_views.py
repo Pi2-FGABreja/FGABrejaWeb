@@ -3,10 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 
-class TestLoginView(TestCase):
-
-    def setUp(self):
-        self.client = Client()
+class FGABrejaTestCase(TestCase):
 
     def create_user(self, is_active=True):
         user = User()
@@ -17,6 +14,12 @@ class TestLoginView(TestCase):
         user.set_password('1234')
         user.is_active = is_active
         user.save()
+
+
+class TestLoginView(FGABrejaTestCase):
+
+    def setUp(self):
+        self.client = Client()
 
     def test_put_method(self):
         response = self.client.put(reverse('login'))
@@ -30,6 +33,12 @@ class TestLoginView(TestCase):
         response = self.client.get(reverse('login'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='login.html')
+
+    def test_get_logged(self):
+        self.create_user()
+        self.client.login(username='username', password='1234')
+        response = self.client.get(reverse('login'))
+        self.assertRedirects(response, '/')
 
     def test_post_valid_data(self):
         self.create_user()
@@ -59,7 +68,33 @@ class TestLoginView(TestCase):
         self.assertEqual(200, response.status_code)
 
 
-class TestForgotPasswordView(TestCase):
+class TestLogoutView(FGABrejaTestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_get(self):
+        self.create_user()
+        self.client.login(username='username', password='1234')
+        response = self.client.get(reverse('logout'))
+        self.assertRedirects(response, '/')
+
+
+class TestUpdatePasswordView(FGABrejaTestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.data = {'password': 'password',
+                     'confirm_password': 'password'}
+
+    def test_post(self):
+        self.create_user()
+        self.client.login(username='username', password='1234')
+        response = self.client.post(reverse('update_password'), data=self.data)
+        self.assertRedirects(response, reverse('login'))
+
+
+class TestForgotPasswordView(FGABrejaTestCase):
 
     def setUp(self):
         self.client = Client()
@@ -73,7 +108,7 @@ class TestForgotPasswordView(TestCase):
         self.assertEquals(response.status_code, 405)
 
 
-class TestRegisterUserView(TestCase):
+class TestRegisterUserView(FGABrejaTestCase):
 
     def setUp(self):
         self.client = Client()

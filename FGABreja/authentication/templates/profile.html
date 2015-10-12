@@ -40,9 +40,9 @@
         <div class="card social-card">
           <div class="card-content">
             <span class="card-title busineme-text text-light-blue">{% trans 'Social Informations' %}</span>
-            {% load gravatar %}
+            {# {% load gravatar %} #}
             <div class="profile-avatar">
-              <p><img class="responsive-img" src="{% gravatar_url user.email 200 %}" alt="avatar"></p>
+              {# <p><img class="responsive-img" src="{% gravatar_url user.email 200 %}" alt="avatar"></p> #}
               <a href="https://en.gravatar.com/emails/" target="_blank" class="btn">{% trans 'Change Avatar'%}</a>
               <p><small>{% trans "We use the Gravatar to manage user's avatar" %}</small></p>
             </div>
