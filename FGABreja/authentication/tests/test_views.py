@@ -1,25 +1,9 @@
-from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-
-
-class FGABrejaTestCase(TestCase):
-
-    def create_user(self, is_active=True):
-        user = User()
-        user.id = 1
-        user.username = 'username'
-        user.email = 'email@test.com'
-        user.first_name = 'first'
-        user.set_password('1234')
-        user.is_active = is_active
-        user.save()
+from defaults.test import FGABrejaTestCase
 
 
 class TestLoginView(FGABrejaTestCase):
-
-    def setUp(self):
-        self.client = Client()
 
     def test_put_method(self):
         response = self.client.put(reverse('login'))
@@ -70,9 +54,6 @@ class TestLoginView(FGABrejaTestCase):
 
 class TestLogoutView(FGABrejaTestCase):
 
-    def setUp(self):
-        self.client = Client()
-
     def test_get(self):
         self.create_user()
         self.client.login(username='username', password='1234')
@@ -83,7 +64,6 @@ class TestLogoutView(FGABrejaTestCase):
 class TestUpdatePasswordView(FGABrejaTestCase):
 
     def setUp(self):
-        self.client = Client()
         self.data = {'password': 'password',
                      'confirm_password': 'password'}
 
@@ -93,11 +73,15 @@ class TestUpdatePasswordView(FGABrejaTestCase):
         response = self.client.post(reverse('update_password'), data=self.data)
         self.assertRedirects(response, reverse('login'))
 
+    def test_post_invalid_form(self):
+        self.create_user()
+        self.client.login(username='username', password='1234')
+        self.data['confirm_password'] = '1234'
+        response = self.client.post(reverse('update_password'), data=self.data)
+        self.assertRedirects(response, reverse('user_profile'))
+
 
 class TestForgotPasswordView(FGABrejaTestCase):
-
-    def setUp(self):
-        self.client = Client()
 
     def test_put_method(self):
         response = self.client.put(reverse('forgot_password'))
@@ -108,10 +92,31 @@ class TestForgotPasswordView(FGABrejaTestCase):
         self.assertEquals(response.status_code, 405)
 
 
+class TestUserProfileView(FGABrejaTestCase):
+
+    def setUp(self):
+        self.data = {'first_name': 'first_name',
+                     'email': 'email@test.com'}
+        self.create_user()
+        self.client.login(username='username', password='1234')
+
+    def test_get(self):
+        response = self.client.get(reverse('user_profile'))
+        self.assertEquals(200, response.status_code)
+
+    def test_post(self):
+        response = self.client.post(reverse('user_profile'), data=self.data)
+        self.assertRedirects(response, reverse('user_profile'))
+
+    def test_post_invalid_data(self):
+        self.data['email'] = 'invalid email'
+        response = self.client.post(reverse('user_profile'), data=self.data)
+        self.assertRedirects(response, reverse('user_profile'))
+
+
 class TestRegisterUserView(FGABrejaTestCase):
 
     def setUp(self):
-        self.client = Client()
         self.data = {'username': 'username',
                      'first_name': 'first_name',
                      'email': 'email@test.com',
@@ -136,3 +141,25 @@ class TestRegisterUserView(FGABrejaTestCase):
         after = len(User.objects.all())
 
         self.assertGreater(after, before)
+
+    def test_post_invalid_username(self):
+        self.data['username'] = 'invalid username !@#$'
+        response = self.client.post(reverse('register_user'), data=self.data)
+        self.assertRedirects(response, reverse('register_user'))
+
+    def test_post_invalid_email(self):
+        self.data['email'] = 'invalid email '
+        response = self.client.post(reverse('register_user'), data=self.data)
+        self.assertRedirects(response, reverse('register_user'))
+
+
+class TestDeactivateUserView(FGABrejaTestCase):
+
+    def setUp(self):
+        self.create_user()
+        self.client.login(username='username', password='1234')
+
+    def test_post(self):
+        response = self.client.post(reverse('deactivate_user'),
+                                    data={'reason': 'reason'})
+        self.assertRedirects(response, '/')

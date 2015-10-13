@@ -4,11 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from defaults.views import FGABrejaView
 from django.utils.translation import ugettext as _
-from django.views.generic import View
 
 
-class LoginView(View):
+class LoginView(FGABrejaView):
     http_method_names = [u'get', u'post']
 
     def get(self, request):
@@ -39,7 +39,7 @@ class LoginView(View):
                                   context=RequestContext(request))
 
 
-class LogoutView(View):
+class LogoutView(FGABrejaView):
     http_method_names = [u'get']
 
     def get(self, request):
@@ -48,7 +48,7 @@ class LogoutView(View):
         return redirect("/")
 
 
-class ForgotPasswordView(View):
+class ForgotPasswordView(FGABrejaView):
     http_method_names = [u'get', u'post']
 
     def get(self, request):
@@ -58,7 +58,7 @@ class ForgotPasswordView(View):
         return render_to_response('login.html')
 
 
-class UpdatePasswordView(View):
+class UpdatePasswordView(FGABrejaView):
     http_method_names = [u'get', u'post']
 
     def post(self, request):
@@ -75,12 +75,8 @@ class UpdatePasswordView(View):
 
         return response
 
-    def add_message_errors(self, form, request):
-        for error in form.errors:
-            messages.error(request, _(error))
 
-
-class UserProfileView(View):
+class UserProfileView(FGABrejaView):
     http_method_names = [u'get', u'post']
 
     def get(self, request):
@@ -103,7 +99,7 @@ class UserProfileView(View):
             messages.error(request, _(error))
 
 
-class DeactivateUserView(View):
+class DeactivateUserView(FGABrejaView):
     http_method_names = [u'post']
 
     def post(self, request):
@@ -117,7 +113,7 @@ class DeactivateUserView(View):
         return redirect("/")
 
 
-class RegisterUserView(View):
+class RegisterUserView(FGABrejaView):
     http_method_names = [u'get', u'post']
 
     def get(self, request):
@@ -141,6 +137,4 @@ class RegisterUserView(View):
 
     def add_message_errors(self, form, request):
         for error in form.errors:
-            error_msg = form.errors.get(error).as_text()
-            error_msg = error_msg[2:]
-            messages.error(request, _(error_msg))
+            messages.error(request, _(error))
