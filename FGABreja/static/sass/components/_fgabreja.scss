@@ -3,7 +3,17 @@
   margin-top: 5rem;
 }
 
+.home-card {
+    @extend .card;
+    margin-top: 3rem;
+}
+
 .fgabreja-topbar {
   @extend .brand-logo;
   font-family: "PatuaOne";
+}
+
+.graph {
+    width: 100%;
+    height: 28rem;
 }

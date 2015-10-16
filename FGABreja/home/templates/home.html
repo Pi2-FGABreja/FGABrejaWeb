@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Home{% endblock title %}
+
+{% block main_content %}
+  <div class="container">
+    <div class="row">
+      <div class="home-card">
+        <div class="card-content">
+          <span class="card-title brown-text">{% trans "Brewery" %}</span>
+          <div id="graph" class="graph"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main_content %}
+
+{% block footer_scripts %}
+  {% load staticfiles %}
+  <script src="{% static 'js//highcharts.js' %}"></script>
+  {% include "home_graph_js" %}
+{% endblock footer_scripts %}

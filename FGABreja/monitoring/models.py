@@ -6,13 +6,22 @@ from django.db import models
 class Location(models.Model):
     description = models.CharField(max_length=100)
 
+    def natural_key(self):
+        return self.description
+
 
 class Position(models.Model):
     description = models.CharField(max_length=100)
 
+    def natural_key(self):
+        return self.description
+
 
 class SensorType(models.Model):
     description = models.CharField(max_length=50)
+
+    def natural_key(self):
+        return self.description
 
 
 class Sensor(models.Model):
@@ -24,7 +33,8 @@ class Sensor(models.Model):
         abstract = True
 
 
-class TermalSensor(Sensor):
-    temperature = models.FloatField()
+class ThermalSensor(Sensor):
+    identifier = models.IntegerField()
+    temperature = models.DecimalField(max_digits=5, decimal_places=2)
     date = models.DateField(auto_now=True)
-    time = models.TimeField(auto_now=True)
+    time = models.TimeField()

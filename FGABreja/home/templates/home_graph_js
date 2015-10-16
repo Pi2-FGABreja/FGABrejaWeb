@@ -1,0 +1,85 @@
+{% load i18n %}
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            $('#graph').highcharts({
+                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg, // don't animate in old IE
+                    marginRight: 10,
+                    events: {
+                        load: function () {
+
+                            // set up the updating of the chart each second
+                            var series = this.series[0];
+                            setInterval(function () {
+                                $.get("{% url 'get_sensor_data' sensor_id=1 %}", function(data) {
+                                    sensor = data[0]['fields']
+
+                                    x = (new Date()).getTime()
+                                    y = Number(sensor.temperature)
+                                    series.addPoint([x, y], true, true)
+                                    console.log(x, y)
+
+                                })
+                            }, 1000);
+                        }
+                    }
+                },
+                title: {
+                    text: 'Live random data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150
+                },
+                yAxis: {
+                    title: {
+                        text: 'Value'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2);
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Random data',
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                        {% for initial_data in sensor_data %}
+                            datestring = '{{initial_data.date|date:"Y-m-d"}} {{initial_data.time|time:"H:i:s"}}';
+                            console.log(datestring)
+                            data.push({
+                                x: (new Date(datestring)).getTime(),
+                                y: {{initial_data.temperature}}
+                            });
+                        {% endfor %}
+                        return data;
+                    }())
+                }]
+            });
+        });
+    });
+</script>
