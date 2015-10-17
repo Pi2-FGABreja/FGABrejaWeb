@@ -19,13 +19,15 @@
 
                             // set up the updating of the chart each second
                             var series = this.series[0];
+                            var maxSamples = 15;
+                            var count = 0;
                             setInterval(function () {
                                 $.get("{% url 'get_sensor_data' sensor_id=1 %}", function(data) {
                                     sensor = data[0]['fields']
 
                                     x = (new Date()).getTime()
                                     y = Number(sensor.temperature)
-                                    series.addPoint([x, y], true, true)
+                                    series.addPoint([x, y], true, (++count>=maxSamples))
                                     console.log(x, y)
 
                                 })
@@ -33,16 +35,17 @@
                         }
                     }
                 },
-                title: {
-                    text: 'Live random data'
-                },
+                title: false,
+                // title: {
+                //     text: 'Live random data'
+                // },
                 xAxis: {
                     type: 'datetime',
-                    tickPixelInterval: 150
+                    tickPixelInterval: 50
                 },
                 yAxis: {
                     title: {
-                        text: 'Value'
+                        text: 'Temperature'
                     },
                     plotLines: [{
                         value: 0,
@@ -50,11 +53,12 @@
                         color: '#808080'
                     }]
                 },
+                colors: ['#d32f2f'],
                 tooltip: {
                     formatter: function () {
                         return '<b>' + this.series.name + '</b><br/>' +
-                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                            Highcharts.numberFormat(this.y, 2);
+                            Highcharts.dateFormat('%d/%m/%Y %H:%M:%S', this.x) + '<br/><br/>' +
+                            Highcharts.numberFormat(this.y, 2) + ' ºC';
                     }
                 },
                 legend: {
@@ -64,20 +68,8 @@
                     enabled: false
                 },
                 series: [{
-                    name: 'Random data',
-                    data: (function () {
-                        // generate an array of random data
-                        var data = [],
-                        {% for initial_data in sensor_data %}
-                            datestring = '{{initial_data.date|date:"Y-m-d"}} {{initial_data.time|time:"H:i:s"}}';
-                            console.log(datestring)
-                            data.push({
-                                x: (new Date(datestring)).getTime(),
-                                y: {{initial_data.temperature}}
-                            });
-                        {% endfor %}
-                        return data;
-                    }())
+                    name: 'Temperature',
+                    data: []
                 }]
             });
         });

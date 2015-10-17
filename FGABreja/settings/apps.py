@@ -27,7 +27,6 @@ FGABREJA_APPS = (
     'api',
     'monitoring',
     'authentication',
-    'home',
 )
 
 INSTALLED_APPS = DJANGO_APPS + DJANGO_PLUGINS + FGABREJA_APPS
