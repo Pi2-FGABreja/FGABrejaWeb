@@ -3,21 +3,46 @@
 
 {% block title %}Home{% endblock title %}
 
+{% block navbar_tabs %}
+  <ul class="tabs fixed z-depth-1 hide-on-small-only">
+    <li class="tab col s3"><a href="#real-time">Real-Time</a></li>
+    <li class="tab col s3"><a href="#report-chart">Report Chart</a></li>
+  </ul>
+
+  <ul class="tabs fixed z-depth-1 hide-on-med-and-up">
+    <li class="tab col s3"><a href="#real-time"><i class="material-icons small">timer</i></a></li>
+    <li class="tab col s3"><a href="#report-chart"><i class="material-icons">insert_chart</i></a></li>
+  </ul>
+{% endblock navbar_tabs %}
+
 {% block main_content %}
-  <div class="container">
+  <div id="real-time" class="container">
     <div class="row">
       <div class="home-card">
         <div class="card-content">
           <span class="card-title brown-text">{% trans "Brewery" %}</span>
-          <div id="graph" class="graph"></div>
+          <div id="realtime-chart" class="graph"></div>
         </div>
       </div>
     </div>
   </div>
+
+  <div id="report-chart" class="container">
+    <div class="row">
+      <div class="home-card">
+        <div class="card-content">
+          <span class="card-title brown-text">{% trans "Brewery" %}</span>
+          <div id="static-chart" class="graph"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock main_content %}
 
 {% block footer_scripts %}
   {% load staticfiles %}
   <script src="{% static 'js//highcharts.js' %}"></script>
-  {% include "home_graph_js" %}
+  {% include "realtime_chart_js" %}
+  {% include "static_chart_js" %}
 {% endblock footer_scripts %}

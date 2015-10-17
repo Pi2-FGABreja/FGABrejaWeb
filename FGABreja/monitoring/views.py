@@ -19,6 +19,6 @@ class HomeView(FGABrejaView):
 
     def get(self, request):
         sensor_data = ThermalSensor.objects.filter(
-            identifier=1).order_by('-date', '-time')
+            identifier=1).order_by('date', 'time')
         return render_to_response('home.html', locals(),
                                   context_instance=RequestContext(request))

@@ -1,0 +1,71 @@
+{% load i18n %}
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            $('#static-chart').highcharts({
+                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg, // don't animate in old IE
+                    marginRight: 10,
+                    events: {
+                        load: function () {
+                            var series = this.series[0];
+                        }
+                    }
+                },
+                title: false,
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 50
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                colors: ['#d32f2f'],
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%d/%m/%Y %H:%M:%S', this.x) + '<br/><br/>' +
+                            Highcharts.numberFormat(this.y, 2) + ' ºC';
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Temperature',
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                        {% for initial_data in sensor_data %}
+                            datestring = '{{initial_data.date|date:"Y-m-d"}} {{initial_data.time|time:"H:i:s"}}';
+                            console.log(datestring)
+                            data.push({
+                                x: (new Date(datestring)).getTime(),
+                                y: {{initial_data.temperature}}
+                            });
+                        {% endfor %}
+                        return data;
+                    }())
+                }]
+            });
+        });
+    });
+</script>

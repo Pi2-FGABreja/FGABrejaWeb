@@ -15,6 +15,9 @@
   <body>
   {% include 'topbar.html' %}
 
+  {% block navbar_tabs %}
+  {% endblock navbar_tabs %}
+
   {% block main_content %}
   {% endblock main_content %}
 
@@ -31,7 +34,6 @@
         });
         $('.modal-trigger').leanModal();
         $(".dropdown-button").dropdown();
-        $(".parallax").parallax();
       });
     </script>
 

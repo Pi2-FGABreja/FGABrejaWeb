@@ -9,7 +9,7 @@
                 }
             });
 
-            $('#graph').highcharts({
+            $('#realtime-chart').highcharts({
                 chart: {
                     type: 'spline',
                     animation: Highcharts.svg, // don't animate in old IE
@@ -36,9 +36,6 @@
                     }
                 },
                 title: false,
-                // title: {
-                //     text: 'Live random data'
-                // },
                 xAxis: {
                     type: 'datetime',
                     tickPixelInterval: 50
