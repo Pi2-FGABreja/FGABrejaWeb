@@ -19,3 +19,19 @@ class SensorAPI(object):
 
     def all(self):
         return self.get_data(self.get_url())
+
+
+class ThermalSensorAPI(SensorAPI):
+    def get_url(self, average=False):
+        url = settings.API_URL
+        url += "sensors/thermal/"
+        if average:
+            url += "average/"
+        return url
+
+    def all(self):
+        pass
+
+    def average(self):
+        data = self.get_data(self.get_url(average=True))
+        return data

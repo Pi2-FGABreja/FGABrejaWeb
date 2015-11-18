@@ -21,17 +21,22 @@
                             var series = this.series[0];
                             var maxSamples = 15;
                             var count = 0;
-                            setInterval(function () {
-                                $.get("{% url 'get_sensor_data' sensor_id=1 %}", function(data) {
-                                    sensor = data[0]['fields']
+                            $.get("{% url 'temperature_average' %}", function(data) {
+                                x = (new Date()).getTime()
+                                y = Number(data['average'])
+                                series.addPoint([x, y], true, (++count>=maxSamples))
+                                console.log(x, y)
 
+                            })
+                            setInterval(function () {
+                                $.get("{% url 'temperature_average' %}", function(data) {
                                     x = (new Date()).getTime()
-                                    y = Number(sensor.temperature)
+                                    y = Number(data['average'])
                                     series.addPoint([x, y], true, (++count>=maxSamples))
                                     console.log(x, y)
 
                                 })
-                            }, 1000);
+                            }, 5000);
                         }
                     }
                 },

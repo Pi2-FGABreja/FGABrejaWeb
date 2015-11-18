@@ -1,18 +1,16 @@
 from django.http import HttpResponse
-from django.core import serializers
 from monitoring.models import ThermalSensor
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from defaults.views import FGABrejaView
-import random
+from api.sensor import ThermalSensorAPI
+import json
 
 
-def get_sensor_data(request, sensor_id):
-    sensors = ThermalSensor.objects.filter(identifier=sensor_id)
-    data = serializers.serialize('json',
-                                 [random.choice(sensors)],
-                                 use_natural_foreign_keys=True)
-    return HttpResponse(data, content_type='application/json')
+def get_temperature_average(request):
+    api = ThermalSensorAPI()
+    data = api.average()
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 class HomeView(FGABrejaView):

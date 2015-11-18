@@ -1,9 +1,9 @@
 from django.conf.urls import url
-from monitoring.views import get_sensor_data, HomeView
+from monitoring.views import get_temperature_average, HomeView
 
 
 urlpatterns = [
-    url(r'^sensor/(?P<sensor_id>[0-9]+)$', get_sensor_data,
-        name='get_sensor_data'),
+    url(r'^temperature/average/$', get_temperature_average,
+        name='temperature_average'),
     url(r'^$', HomeView.as_view(), name='home'),
 ]
