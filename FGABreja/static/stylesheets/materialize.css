@@ -9744,8 +9744,8 @@ a.waves-effect .waves-ripple {
 .collapsible-header {
   display: block;
   cursor: pointer;
-  min-height: 3rem;
-  line-height: 3rem;
+  min-height: 5rem;
+  line-height: 5rem;
   padding: 0 1rem;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
@@ -9754,7 +9754,7 @@ a.waves-effect .waves-ripple {
 .collapsible-header i {
   width: 2rem;
   font-size: 1.6rem;
-  line-height: 3rem;
+  line-height: 5rem;
   display: block;
   float: left;
   text-align: center;
@@ -12669,4 +12669,25 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .graph {
   width: 100%;
   height: 25rem;
+}
+
+/* line 21, ../sass/components/_fgabreja.scss */
+.bold {
+  font-weight: bold;
+}
+
+/* line 25, ../sass/components/_fgabreja.scss */
+.collapsible-body {
+  padding: 1rem 2rem 1rem;
+  background-color: whitesmoke;
+}
+
+/* line 30, ../sass/components/_fgabreja.scss */
+.recipe-item {
+  margin: 1rem 0rem !important;
+}
+
+/* line 34, ../sass/components/_fgabreja.scss */
+.process-info {
+  padding-top: 3rem;
 }

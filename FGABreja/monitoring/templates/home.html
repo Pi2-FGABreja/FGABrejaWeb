@@ -3,46 +3,60 @@
 
 {% block title %}Home{% endblock title %}
 
-{% block navbar_tabs %}
-  <ul class="tabs fixed z-depth-1 hide-on-small-only">
-    <li class="tab col s3"><a href="#real-time">Real-Time</a></li>
-    <li class="tab col s3"><a href="#report-chart">Report Chart</a></li>
-  </ul>
-
-  <ul class="tabs fixed z-depth-1 hide-on-med-and-up">
-    <li class="tab col s3"><a href="#real-time"><i class="material-icons small">timer</i></a></li>
-    <li class="tab col s3"><a href="#report-chart"><i class="material-icons">insert_chart</i></a></li>
-  </ul>
-{% endblock navbar_tabs %}
-
 {% block main_content %}
-  <div id="real-time" class="container">
-    <div class="row">
-      <div class="home-card">
-        <div class="card-content">
-          <span class="card-title brown-text">{% trans "Brewery" %}</span>
-          <div id="realtime-chart" class="graph"></div>
-        </div>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="s12 m12 col">
+      <h3 class="center-align">{% trans "Beer Processes" %}</h3>
     </div>
   </div>
+</div>
 
-  <div id="report-chart" class="container">
-    <div class="row">
-      <div class="home-card">
-        <div class="card-content">
-          <span class="card-title brown-text">{% trans "Brewery" %}</span>
-          <div id="static-chart" class="graph"></div>
+<div class="container">
+  <ul class="collapsible popout" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header">
+          <div><i class="material-icons">chevron_right</i>Red Ale</div>
+      </div>
+      <div class="collapsible-body">
+        <div class="row">
+          <div class="s12 m6 col">
+            <ul>
+              <li><span class="bold">{% trans "Initialized at:" %}</span> 5 de dezembro de 2015</li>
+              <li><span class="bold">{% trans "Finalized at:" %}</span> ---</li>
+              <li><span class="bold">{% trans "Recipe description:" %}</span> 5.84% teor de álcool</li>
+              <li><span class="bold">{% trans "Malt:" %}</span> 75% Pilsen, 10% Malte de trigo, 10% CaraAmber, 5% CaraAroma</li>
+              <li><span class="bold">{% trans "Yeast:" %}</span> BRY-97</li>
+            </ul>
+          </div>
+          <div class="s12 m6 col center">
+            <a href="{% url 'monitoring' %}" class="btn">{% trans "Real-time monitoring" %}</a>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </li>
 
+    <li>
+      <div class="collapsible-header">
+          <div><i class="material-icons">check</i>Red Ale</div>
+      </div>
+      <div class="collapsible-body">
+        <div class="row">
+          <div class="s12 m6 col">
+            <ul>
+              <li><span class="bold">{% trans "Initialized at:" %}</span> 5 de dezembro de 2015</li>
+              <li><span class="bold">{% trans "Finalized at:" %}</span> 24 de dezembro de 2015</li>
+              <li><span class="bold">{% trans "Recipe description:" %}</span> 5.84% teor de álcool</li>
+              <li><span class="bold">{% trans "Malt:" %}</span> 75% Pilsen, 10% Malte de trigo, 10% CaraAmber, 5% CaraAroma</li>
+              <li><span class="bold">{% trans "Yeast:" %}</span> BRY-97</li>
+            </ul>
+          </div>
+          <div class="s12 m6 col center">
+
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 {% endblock main_content %}
-
-{% block footer_scripts %}
-  {% load staticfiles %}
-  <script src="{% static 'js//highcharts.js' %}"></script>
-  {% include "realtime_chart_js" %}
-  {% include "static_chart_js" %}
-{% endblock footer_scripts %}

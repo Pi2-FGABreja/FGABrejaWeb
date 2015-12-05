@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from monitoring.models import ThermalSensor
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from defaults.views import FGABrejaView
@@ -16,7 +15,19 @@ def get_temperature_average(request):
 class HomeView(FGABrejaView):
 
     def get(self, request):
-        sensor_data = ThermalSensor.objects.filter(
-            identifier=1).order_by('date', 'time')
         return render_to_response('home.html', locals(),
+                                  context_instance=RequestContext(request))
+
+
+class MonitoringView(FGABrejaView):
+
+    def get(self, request):
+        return render_to_response('monitoring.html', locals(),
+                                  context_instance=RequestContext(request))
+
+
+class NewProcessView(FGABrejaView):
+
+    def get(self, request):
+        return render_to_response('new_process.html', locals(),
                                   context_instance=RequestContext(request))
