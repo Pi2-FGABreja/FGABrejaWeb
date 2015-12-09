@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n formatter %}
 
 {% block title %}Home{% endblock title %}
 
@@ -14,49 +14,39 @@
 
 <div class="container">
   <ul class="collapsible popout" data-collapsible="accordion">
+   {% for process in processes %}
     <li>
       <div class="collapsible-header">
-          <div><i class="material-icons">chevron_right</i>Red Ale</div>
+          {% process_status_icon process.is_active as icon %}
+          <div><i class="material-icons">{{icon}}</i>
+            {% if process.is_active %}
+              {{process.recipe.name}} ({{process.get_stage}} - {{process.state}})
+            {% else %}
+              {{process.recipe.name}}
+            {% endif %}
+
+          </div>
       </div>
       <div class="collapsible-body">
         <div class="row">
           <div class="s12 m6 col">
             <ul>
-              <li><span class="bold">{% trans "Initialized at:" %}</span> 5 de dezembro de 2015</li>
-              <li><span class="bold">{% trans "Finalized at:" %}</span> ---</li>
-              <li><span class="bold">{% trans "Recipe description:" %}</span> 5.84% teor de álcool</li>
-              <li><span class="bold">{% trans "Malt:" %}</span> 75% Pilsen, 10% Malte de trigo, 10% CaraAmber, 5% CaraAroma</li>
-              <li><span class="bold">{% trans "Yeast:" %}</span> BRY-97</li>
+              <li><span class="bold">{% trans "Initialized at:" %}</span> {{process.initial_datetime}}</li>
+              <li><span class="bold">{% trans "Finalized at:" %}</span> {{process.final_datetime|default_if_none:"----"}}</li>
+              <li><span class="bold">{% trans "Recipe description:" %}</span> {{process.recipe.description}}</li>
+              <li><span class="bold">{% trans "Malt:" %}</span> {{process.recipe.malt}}</li>
+              <li><span class="bold">{% trans "Yeast:" %}</span> {{process.recipe.yeast}}</li>
             </ul>
           </div>
           <div class="s12 m6 col center">
+            {% if process.is_active %}
             <a href="{% url 'monitoring' %}" class="btn">{% trans "Real-time monitoring" %}</a>
+            {% endif %}
           </div>
         </div>
       </div>
     </li>
-
-    <li>
-      <div class="collapsible-header">
-          <div><i class="material-icons">check</i>Red Ale</div>
-      </div>
-      <div class="collapsible-body">
-        <div class="row">
-          <div class="s12 m6 col">
-            <ul>
-              <li><span class="bold">{% trans "Initialized at:" %}</span> 5 de dezembro de 2015</li>
-              <li><span class="bold">{% trans "Finalized at:" %}</span> 24 de dezembro de 2015</li>
-              <li><span class="bold">{% trans "Recipe description:" %}</span> 5.84% teor de álcool</li>
-              <li><span class="bold">{% trans "Malt:" %}</span> 75% Pilsen, 10% Malte de trigo, 10% CaraAmber, 5% CaraAroma</li>
-              <li><span class="bold">{% trans "Yeast:" %}</span> BRY-97</li>
-            </ul>
-          </div>
-          <div class="s12 m6 col center">
-
-          </div>
-        </div>
-      </div>
-    </li>
+    {% endfor %}
   </ul>
 </div>
 {% endblock main_content %}

@@ -1,0 +1,75 @@
+<script>
+    PREBREWERY = {1: 'Insert water',
+              2: 'Waiting water',
+              3: 'Stop water'};
+    BREWERY = {4: 'Initial boiling',
+           5: 'Insert malt',
+           6: 'Heating',
+           7: 'Heat controll',
+           8: 'Iodine test'};
+    FILTERING = {9: 'Open pot valve',
+             10: 'Insert water',
+             11: 'Check level',
+             12: 'Stop water'};
+    BOILING = {13: 'Warm must',
+           14: 'Add hop',
+           15: 'Continue boiling'};
+    COOLING = {16: 'Turn on chiller',
+           17: 'Check temperature'};
+    FERMENTATION = {18: 'Chill must',
+                19: 'Maintain temperature',
+                20: 'Process end'};
+
+    function get_stage(state) {
+        if (state in PREBREWERY) {return "Pre-Brewery";}
+        else if (state in BREWERY) {return "Brewery";}
+        else if (state in FILTERING) {return "Filtering";}
+        else if (state in BOILING) {return "Boiling";}
+        else if (state in COOLING) {return "Cooling";}
+        else if (state in FERMENTATION) {return "Fermentation";}
+    }
+
+    function get_state(state) {
+        if (state in PREBREWERY) {return PREBREWERY[state];}
+        else if (state in BREWERY) {return BREWERY[state];}
+        else if (state in FILTERING) {return FILTERING[state];}
+        else if (state in BOILING) {return BOILING[state];}
+        else if (state in COOLING) {return COOLING[state];}
+        else if (state in FERMENTATION) {return FERMENTATION[state];}
+    }
+
+    $(document).ready(function(){
+        var malt_modal = false;
+        setInterval(function() {
+            $.get("{% url 'actual_process' %}", function(data) {
+                var process = data['objects'][0];
+                $('.js-stage').html(get_stage(process.state));
+                $('.js-state').html(get_state(process.state));
+                var process_date = new Date(process.initial_datetime);
+                $('.js-process-date').html(process_date.toDateString());
+
+                if (process.malt) {
+                    $('.js-malt').html('check_box_outline');
+                } else {
+                    $('.js-malt').html('check_box_outline_blank');
+                }
+
+                if (process.iodine_test) {
+                    $('.js-iodine-test').html('check_box_outline');
+                } else {
+                    $('.js-iodine-test').html('check_box_outline_blank');
+                }
+                if (process.state == 5 && !malt_modal) {
+                    $("#malt-modal").openModal();
+                    malt_modal = true;
+                }
+
+                if (process.state == 8) {
+                    $("#iodine-modal").closeModal();
+                    $("#iodine-modal").openModal();
+                }
+            })
+        }, 5000);
+    });
+
+</script>

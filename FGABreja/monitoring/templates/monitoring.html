@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}Monitoring{% endblock title %}
 
 {% block main_content %}
   <div id="real-time" class="container">
@@ -9,8 +9,8 @@
       <div class="s12 m9 col">
         <div class="home-card">
           <div class="card-content">
-            <span class="card-title brown-text">{% trans "Brewery" %}.</span>
-            <span>Actual state</span>
+            <span class="card-title brown-text js-stage">Loading...</span>
+            <span class="js-state"></span>
             <div id="realtime-chart" class="graph"></div>
           </div>
         </div>
@@ -21,25 +21,46 @@
           <h5>Process Info</h5>
           <div class="row">
             <div class="s2 col"><i class="material-icons">today</i></div>
-            <div class="s10 col">10 de dezembro de 2015</div>
+            <div class="s10 col js-process-date">Loading...</div>
           </div>
 
           <div class="row">
-            <div class="s2 col"><i class="material-icons">check_box_outline</i></div>
+            <div class="s2 col"><i class="material-icons js-malt">check_box_outline_blank</i></div>
             <div class="s10 col">Malt</div>
           </div>
 
           <div class="row">
-            <div class="s2 col"><i class="material-icons">check_box_outline_blank</i></div>
+            <div class="s2 col"><i class="material-icons js-iodine-test">check_box_outline_blank</i></div>
             <div class="s10 col">Iodine test</div>
           </div>
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="s2 col"><i class="material-icons">timer</i></div>
-            <div class="s10 col">01:23:40:40</div>
-          </div>
+            <div class="s10 col js-process-time">Loading...</div>
+          </div> -->
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <div id="malt-modal" class="modal">
+    <div class="modal-content">
+      <h4>It's malt time!</h4>
+      <p>Please, put the malt on first pot :)</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+    </div>
+  </div>
+
+  <div id="iodine-modal" class="modal">
+    <div class="modal-content">
+      <h4>It's iodine test time!</h4>
+      <p>Please, make the iodine test to continue :)</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
     </div>
   </div>
 
@@ -47,6 +68,7 @@
 
 {% block footer_scripts %}
   {% load staticfiles %}
-  <script src="{% static 'js//highcharts.js' %}"></script>
+  <script src="{% static 'js/highcharts.js' %}"></script>
   {% include "realtime_chart_js" %}
+  {% include "realtime_monitoring_js" %}
 {% endblock footer_scripts %}
