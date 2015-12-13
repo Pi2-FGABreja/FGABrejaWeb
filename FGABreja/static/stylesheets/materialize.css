@@ -12691,3 +12691,9 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .process-info {
   padding-top: 3rem;
 }
+
+/* line 38, ../sass/components/_fgabreja.scss */
+.turn-on {
+  text-shadow: 0 0 3px white, 0 0 6px white, 0 0 9px white, 0 0 20px #64dd17, 0 0 25px #64dd17, 0 0 30px #64dd17, 0 0 35px #64dd17 !important;
+  color: white;
+}

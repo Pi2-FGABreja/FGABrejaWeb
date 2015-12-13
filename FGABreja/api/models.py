@@ -5,6 +5,7 @@ from monitoring.states import get_stage, get_state
 class Recipe(object):
 
     def __init__(self):
+            self.id = ""
             self.name = ''
             self.description = ''
             self.malt = ''

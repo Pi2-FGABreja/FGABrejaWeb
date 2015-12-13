@@ -14,36 +14,29 @@
 
 <div class="container">
   <div class="row">
+  {% for recipe in recipes %}
     <div class="s12 m6 col">
       <div class="card">
         <div class="card-content">
-          <span class="card-title brown-text">Red Ale</span>
+          <span class="card-title brown-text">{{recipe.name}}</span>
 
-          <p class="recipe-item"><span class="bold">{% trans "Recipe description:" %}</span><br> 5.84% teor de álcool</p>
+          <p class="recipe-item"><span class="bold">{% trans "Recipe description:" %}</span><br> {{recipe.description}}</p>
 
-          <p class="recipe-item"><span class="bold">{% trans "Malt:" %}</span> 5kg <br> 75% Pilsen, 10% Malte de trigo, 10% CaraAmber, 5% CaraAroma</p>
+          <p class="recipe-item"><span class="bold">{% trans "Malt:" %}</span> {{recipe.malt_weight}} kg<br> {{recipe.malt}}</p>
 
-          <p class="recipe-item"><span class="bold">{% trans "Yeast:" %}</span><br> BRY-97</p>
-
-          <p class="recipe-item"><span class="bold">{% trans "Hops:" %}</span><br>
-          <ul>
-            <li>Hop1</li>
-            <li>Hop2</li>
-          </ul></p>
+          <p class="recipe-item"><span class="bold">{% trans "Yeast:" %}</span><br> {{recipe.yeast}}</p>
 
           <div class="center">
-            <a href="" class="btn">Start Process</a>
+            <form action="{% url 'new_process' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" value="{{recipe.id}}" name="recipe_id">
+              <input type="submit" class="btn" value="Start Process">
+            </form>
           </div>
         </div>
       </div>
     </div>
-    <div class="s12 m6 col">
-      <div class="card">
-        <div class="card-content">
-
-        </div>
-      </div>
-    </div>
+  {% endfor %}
   </div>
 </div>
 {% endblock main_content %}

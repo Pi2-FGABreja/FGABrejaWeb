@@ -13,6 +13,13 @@
             <span class="js-state"></span>
             <div id="realtime-chart" class="graph"></div>
           </div>
+          <div class="row">
+            <div class="s2 col right-align"><i class="material-icons js-malt">highlight_off</i></div>
+            <div class="s4 col">Malt</div>
+            <div class="s2 col right-align"><i class="material-icons js-iodine-test">highlight_off</i></div>
+            <div class="s4 col">iodine Test</div>
+          </div>
+
         </div>
       </div>
 
@@ -24,14 +31,36 @@
             <div class="s10 col js-process-date">Loading...</div>
           </div>
 
+          <h6>Status</h6>
+
           <div class="row">
-            <div class="s2 col"><i class="material-icons js-malt">check_box_outline_blank</i></div>
-            <div class="s10 col">Malt</div>
+            <div class="s2 col"><i class="material-icons js-water">power_settings_new</i></div>
+            <div class="s10 col">Water</div>
           </div>
 
           <div class="row">
-            <div class="s2 col"><i class="material-icons js-iodine-test">check_box_outline_blank</i></div>
-            <div class="s10 col">Iodine test</div>
+            <div class="s2 col"><i class="material-icons js-resistor-1">power_settings_new</i></div>
+            <div class="s10 col">Resistor 1</div>
+          </div>
+
+          <div class="row">
+            <div class="s2 col"><i class="material-icons js-engine">power_settings_new</i></div>
+            <div class="s10 col">Engine</div>
+          </div>
+
+          <div class="row">
+            <div class="s2 col"><i class="material-icons js-resistor-2">power_settings_new</i></div>
+            <div class="s10 col">Resistor 2</div>
+          </div>
+
+          <div class="row">
+            <div class="s2 col"><i class="material-icons js-chiller">power_settings_new</i></div>
+            <div class="s10 col">Chiller</div>
+          </div>
+
+          <div class="row">
+            <div class="s2 col"><i class="material-icons js-freezer">power_settings_new</i></div>
+            <div class="s10 col">Freezer</div>
           </div>
 
           <!-- <div class="row">
@@ -50,17 +79,17 @@
       <p>Please, put the malt on first pot :)</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+      <a href="#!" onclick="add_malt();" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
     </div>
   </div>
 
   <div id="iodine-modal" class="modal">
     <div class="modal-content">
       <h4>It's iodine test time!</h4>
-      <p>Please, make the iodine test to continue :)</p>
+      <p>Please, make the iodine test and open the first pot valve to init the filtering process :)</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+      <a onclick="iodine_test();" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
     </div>
   </div>
 

@@ -1,3 +1,4 @@
+{% load urls %}
 <script>
     PREBREWERY = {1: 'Insert water',
               2: 'Waiting water',
@@ -38,8 +39,20 @@
         else if (state in FERMENTATION) {return FERMENTATION[state];}
     }
 
+    function add_malt() {
+        {% insert_malt_url as url %}
+        $.get("{{url}}");
+    }
+
+    function iodine_test() {
+        {% iodine_test_url as url %}
+        $.get("{{url}}");
+    }
+
     $(document).ready(function(){
+        $('#insert-malt-btn').click(add_malt);
         var malt_modal = false;
+        var iodine_test_modal = false;
         setInterval(function() {
             $.get("{% url 'actual_process' %}", function(data) {
                 var process = data['objects'][0];
@@ -49,27 +62,63 @@
                 $('.js-process-date').html(process_date.toDateString());
 
                 if (process.malt) {
-                    $('.js-malt').html('check_box_outline');
+                    $('.js-malt').html('check_circle');
                 } else {
-                    $('.js-malt').html('check_box_outline_blank');
+                    $('.js-malt').html('highlight_off');
                 }
 
                 if (process.iodine_test) {
-                    $('.js-iodine-test').html('check_box_outline');
+                    $('.js-iodine-test').html('check_circle');
                 } else {
-                    $('.js-iodine-test').html('check_box_outline_blank');
+                    $('.js-iodine-test').html('highlight_off');
                 }
                 if (process.state == 5 && !malt_modal) {
                     $("#malt-modal").openModal();
                     malt_modal = true;
                 }
 
-                if (process.state == 8) {
-                    $("#iodine-modal").closeModal();
+                if (process.state == 8 && !iodine_test_modal) {
                     $("#iodine-modal").openModal();
+                    iodine_test_modal = true;
+                }
+
+                if ([1, 2, 10, 11].indexOf(process.state) > -1) {
+                    $('.js-water').addClass('turn-on');
+                } else {
+                    $('.js-water').removeClass("turn-on");
+                }
+
+                if ([4, 5, 6, 7, 8].indexOf(process.state) > -1) {
+                    $('.js-resistor-1').addClass('turn-on');
+                } else {
+                    $('.js-resistor-1').removeClass("turn-on");
+                }
+
+                if ([6, 7, 8].indexOf(process.state) > -1) {
+                    $('.js-engine').addClass('turn-on');
+                } else {
+                    $('.js-engine').removeClass("turn-on");
+                }
+
+                if ([13, 14, 15].indexOf(process.state) > -1) {
+                    $('.js-resistor-2').addClass('turn-on');
+                } else {
+                    $('.js-resistor-2').removeClass("turn-on");
+                }
+
+                if ([16, 17].indexOf(process.state) > -1) {
+                    $('.js-chiller').addClass('turn-on');
+                } else {
+                    $('.js-chiller').removeClass("turn-on");
+                }
+
+                if ([18, 19].indexOf(process.state) > -1) {
+                    $('.js-freezer').addClass('turn-on');
+                } else {
+                    $('.js-freezer').removeClass("turn-on");
                 }
             })
-        }, 5000);
+        }, 3000);
     });
 
 </script>

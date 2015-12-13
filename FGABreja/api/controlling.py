@@ -32,7 +32,7 @@ class ProcessAPI(object):
         return json_data
 
     def all(self):
-        data = self.get_data(self.get_url())
+        data = self.get_data(self.get_url() + '?order_by=-initial_datetime')
         data = data['objects']
         return self.create_process_list(data)
 

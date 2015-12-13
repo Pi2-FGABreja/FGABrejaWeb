@@ -41,6 +41,8 @@ class NewProcessView(FGABrejaView):
         self.api = ProcessAPI()
 
     def get(self, request):
+        api = RecipeAPI()
+        recipes = api.all()
         return render_to_response('new_process.html', locals(),
                                   context_instance=RequestContext(request))
 
